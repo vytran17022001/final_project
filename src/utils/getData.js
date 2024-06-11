@@ -4,7 +4,6 @@ import { app } from "../config/firebase";
 const db = getFirestore(app);
 
 async function getData(nameCollection) {
-  console.log("hello world");
   const col = collection(db, nameCollection); // Tro vao collection
   const schoolSnapShot = await getDocs(col); // Lay du lieu trong collection
   const response = schoolSnapShot.docs.map((doc) => doc.data()); // Map du~ lieu thanh json
