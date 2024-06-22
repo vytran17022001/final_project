@@ -1,12 +1,12 @@
 import React from "react";
 import TableComponent from "../components/TableComponent";
 
-const Role = () => {
+const Category = () => {
   return (
     <>
-      <TableComponent collection="role" />
+      <TableComponent collection="category" />
     </>
   );
 };
 
-export default Role;
+export default Category;

@@ -31,7 +31,45 @@ const toCamelCase = (string) => {
     .join(" ");
 };
 
+const formatData = async (data, column) => {
+  if (typeof data === "object" && data.seconds) {
+    const result = new Date(data.seconds * 1000);
+    return result.toLocaleString();
+  } else if (typeof data === "string" && column.includes("_id")) {
+    const collection = column.split("_id")[0];
+    const json = await getData(collection);
+
+    const rs = json.find((json) => json.id === data);
+
+    const col = Object.keys(rs).find((key) => key.includes("_name"));
+
+    return rs[col];
+  } else {
+    return data;
+  }
+};
+
+const AsyncDataCell = ({ data, column }) => {
+  const [formattedData, setFormattedData] = React.useState(null);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const result = await formatData(data, column);
+      setFormattedData(result);
+    };
+
+    fetchData();
+  }, [data, column]);
+
+  return (
+    <TableCell component="th" scope="row">
+      {formattedData !== null ? formattedData : "Loading..."}
+    </TableCell>
+  );
+};
+
 const TableComponent = ({ collection }) => {
+  collection = collection.toLowerCase();
   const [data, setData] = React.useState([]);
   const [columnName, setColumnName] = React.useState([]);
   const [open, setOpen] = React.useState(false);
@@ -65,6 +103,9 @@ const TableComponent = ({ collection }) => {
 
   return (
     <>
+      <h1 className="text-xl text-center font-bold uppercase">
+        {collection} table
+      </h1>
       <Button variant="outlined" onClick={() => setOpen(true)}>
         Create {collection}
       </Button>
@@ -142,9 +183,7 @@ const TableComponent = ({ collection }) => {
                       {index + 1}
                     </TableCell>
                     {columnName.map((key) => (
-                      <TableCell component="th" scope="row">
-                        {row[key]}
-                      </TableCell>
+                      <AsyncDataCell key={key} data={row[key]} column={key} />
                     ))}
 
                     <TableCell component="th" scope="row">
@@ -198,8 +237,6 @@ const TableComponent = ({ collection }) => {
                               label={toCamelCase(col)}
                               value={dataUpdate[col]}
                               onChange={(e) => {
-                                console.log(col, e.target.value);
-                                console.log(dataUpdate);
                                 setDataUpdate({
                                   ...dataUpdate,
                                   [col]: e.target.value,
