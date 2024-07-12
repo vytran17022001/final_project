@@ -16,6 +16,13 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 const toCamelCase = (string) => {
   return string
@@ -32,18 +39,38 @@ const toCamelCase = (string) => {
 };
 
 const formatData = async (data, column) => {
+  console.log(typeof data);
   if (typeof data === "object" && data.seconds) {
     const result = new Date(data.seconds * 1000);
     return result.toLocaleString();
   } else if (typeof data === "string" && column.includes("_id")) {
+    //includes bao gom
     const collection = column.split("_id")[0];
     const json = await getData(collection);
 
-    const rs = json.find((json) => json.id === data);
+    const rs = json.find((json) => json.id === data) || [];
+    console.log(rs);
 
-    const col = Object.keys(rs).find((key) => key.includes("_name"));
+    const col = Object.keys(rs).find(
+      (key) =>
+        key.includes("_name") ||
+        key.includes("_chair") ||
+        key.includes("_timedate")
+    );
+    console.log(rs[col]);
+
+    if (rs[col].seconds) {
+      const result = new Date(rs[col].seconds * 1000);
+      return result.toLocaleString();
+    }
 
     return rs[col];
+  } else if (typeof data === "boolean") {
+    return data ? (
+      <TaskAltIcon color="primary" fontSize="small" />
+    ) : (
+      <HighlightOffIcon className="text-red-500" fontSize="small" />
+    );
   } else {
     return data;
   }
@@ -75,8 +102,10 @@ const TableComponent = ({ collection }) => {
   const [open, setOpen] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
   const [dataUpdate, setDataUpdate] = React.useState({});
+  const [dataChild, setDataChild] = React.useState({});
 
   const keys = new Set(); //object
+
   const fetchData = async () => {
     const data = await getData(collection);
     setData(data);
@@ -89,7 +118,22 @@ const TableComponent = ({ collection }) => {
       });
     });
 
-    setColumnName([...keys]);
+    const names = [...keys];
+
+    setColumnName(names);
+
+    names.map(async (col) => {
+      if (col.includes("_id")) {
+        const collectName = col.split("_id")[0];
+        const data = await getData(collectName);
+        const newData = { [col]: [...data] };
+
+        setDataChild((prevdataChild) => ({
+          ...prevdataChild,
+          ...newData,
+        }));
+      }
+    });
   };
 
   const handleDelete = async (id) => {
@@ -119,7 +163,6 @@ const TableComponent = ({ collection }) => {
 
             const formData = new FormData(event.currentTarget); // Goi form
             const formJson = Object.fromEntries(formData.entries()); // chuyen form thanh json
-
             columnName.map((col) => {
               formJson[col] = formJson[col].trim(); // xoa khoang trang dau va cuoi cung
               // if (!formJson[col]) {
@@ -136,22 +179,53 @@ const TableComponent = ({ collection }) => {
       >
         <DialogTitle>Create {collection}</DialogTitle>
         <DialogContent>
-          {columnName.map((col) => (
-            <TextField
-              margin="dense"
-              name={col}
-              label={toCamelCase(col)}
-              type={
-                col === "password"
-                  ? "password"
-                  : col === "email"
-                  ? "email"
-                  : "text"
-              } // TODO
-              fullWidth
-              variant="standard"
-            />
-          ))}
+          {columnName.map((col) => {
+            if (col.includes("_id")) {
+              // Col: user_name, role_id, ...
+              // Ten cot: User Name, Role ID, User GMAIL
+              // toCamelCase: user_name -> User Name
+              const name = col.split("_id")[0];
+
+              return (
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">
+                    {toCamelCase(col)}
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name={col}
+                    label={col}
+                  >
+                    {dataChild[col] &&
+                      dataChild[col].map((child) => {
+                        return (
+                          <MenuItem value={child.id}>
+                            {child[name + "_name"]}
+                          </MenuItem>
+                        );
+                      })}
+                  </Select>
+                </FormControl>
+              );
+            }
+            return (
+              <TextField
+                margin="dense"
+                name={col}
+                label={toCamelCase(col)}
+                type={
+                  col === "password"
+                    ? "password"
+                    : col === "email"
+                    ? "email"
+                    : "text"
+                } // TODO
+                fullWidth
+                variant="standard"
+              />
+            );
+          })}
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
@@ -190,7 +264,6 @@ const TableComponent = ({ collection }) => {
                       <Button
                         color="secondary"
                         onClick={() => {
-                          console.log(row);
                           setOpenEdit(true);
                           setDataUpdate(row);
                         }}
@@ -213,8 +286,6 @@ const TableComponent = ({ collection }) => {
                             columnName.map((col) => {
                               formJson[col] = formJson[col].trim();
                             });
-
-                            console.log(dataUpdate);
 
                             await updateData(
                               collection,

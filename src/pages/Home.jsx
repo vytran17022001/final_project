@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import deleteData from "../utils/deleteData";
 import getData from "../utils/getData";
 
@@ -25,7 +23,6 @@ const Home = () => {
 
   return (
     <>
-      <Header />
       <div className="flex items-center mt-20">
         <ul>
           {data.map((user) => (
@@ -37,9 +34,8 @@ const Home = () => {
             </li>
           ))}
         </ul>
-        {/* <button onClick={() => handleDelete("123")}>Xoa student</button> */}
+        <button onClick={() => handleDelete("123")}>Xoa student</button>
       </div>
-      <Footer />
     </>
   );
 };

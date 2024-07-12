@@ -13,14 +13,14 @@ import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import Drawer from "@mui/material/Drawer";
 import MenuIcon from "@mui/icons-material/Menu";
-import logo from "../logo.png";
+import logo from "../logo1.svg";
 
 const logoStyle = {
   width: "100px",
   height: "60px",
   cursor: "pointer",
-  borderRadius: "50%",
   marginBottom: "3px",
+  backgroundColor: "transparent",
 };
 
 function Header({ mode, toggleColorMode }) {
@@ -109,16 +109,18 @@ function Header({ mode, toggleColorMode }) {
                 alignItems: "center",
               }}
             >
-              <Button
-                color="primary"
-                variant="text"
-                size="small"
-                component="a"
-                href="login"
-                target="_blank"
-              >
-                Sign in
-              </Button>
+              <Link to="/login">
+                <Button
+                  color="primary"
+                  variant="text"
+                  size="small"
+                  component="a"
+                  //href="login"
+                  target="_blank"
+                >
+                  Sign in
+                </Button>
+              </Link>
               <Link to="/register">
                 <Button
                   color="primary"

@@ -14,6 +14,11 @@ import AdminLayout from "./components/management/AdminLayout";
 import Actor from "./pages/Actor";
 import Category from "./pages/Category";
 import User from "./pages/User";
+import Movie from "./pages/Movie";
+import Ticket from "./pages/Ticket";
+import Order from "./pages/Order";
+import Payment from "./pages/Payment";
+import Showtime from "./pages/Showtime";
 
 // Route (duong di) cua trang web
 // Authentication
@@ -22,16 +27,16 @@ export default function App() {
     <Router>
       <Routes>
         <Route element={<AdminLayout />}>
-          <Route path="/management/direction" element={<Direction />} />
           <Route path="/management/role" element={<Role />} />
           <Route path="/management/actor" element={<Actor />} />
-          <Route path="/management/direction" element={<Role />} />
-          <Route path="/management/movie" element={<Role />} />
-          <Route path="/management/showtime" element={<Role />} />
+          <Route path="/management/direction" element={<Direction />} />
+          <Route path="/management/movie" element={<Movie />} />
+          <Route path="/management/showtime" element={<Showtime />} />
           <Route path="/management/category" element={<Category />} />
           <Route path="/management/user" element={<User />} />
-          <Route path="/management/ticket" element={<Role />} />
-          <Route path="/management/payment" element={<Role />} />
+          <Route path="/management/ticket" element={<Ticket />} />
+          <Route path="/management/order" element={<Order />} />
+          <Route path="/management/payment" element={<Payment />} />
           <Route path="/management" element={<Management />} />
         </Route>
 

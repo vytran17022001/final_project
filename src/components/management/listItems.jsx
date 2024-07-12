@@ -56,12 +56,12 @@ export const mainListItems = (
         <ListItemText primary="Role" />
       </ListItemButton>
     </Link>
-    <Link to="/management/dicection">
+    <Link to="/management/direction">
       <ListItemButton>
         <ListItemIcon>
           <Person4Icon />
         </ListItemIcon>
-        <ListItemText primary="Dicection" />
+        <ListItemText primary="Direction" />
       </ListItemButton>
     </Link>
     <Link to="/management/actor">
@@ -93,10 +93,10 @@ export const mainListItems = (
         <ListItemIcon>
           <AccessTimeFilledIcon />
         </ListItemIcon>
-        <ListItemText primary="Show Time" />
+        <ListItemText primary="Showtime" />
       </ListItemButton>
     </Link>
-    <Link to="/management/ticker">
+    <Link to="/management/ticket">
       <ListItemButton>
         <ListItemIcon>
           <ConfirmationNumberIcon />

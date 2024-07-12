@@ -1,7 +1,6 @@
 import React from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import getData from "../utils/getData";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -37,8 +36,7 @@ const Login = () => {
 
   return (
     <>
-      <Header />
-      <section class="bg-gray-50 dark:bg-gray-900 mt-20">
+      <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -93,19 +91,18 @@ const Login = () => {
                 </button>
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                   Not have an account?{" "}
-                  <a
-                    href="/register"
+                  <Link
+                    to="/register"
                     class="font-medium text-blue-600 hover:underline dark:text-blue-500"
                   >
                     Register here
-                  </a>
+                  </Link>
                 </p>
               </form>
             </div>
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };
