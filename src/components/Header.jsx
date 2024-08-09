@@ -1,219 +1,69 @@
 import * as React from "react";
-import PropTypes from "prop-types";
+import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import getData from "../utils/getData";
 
-import Box from "@mui/material/Box";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Divider from "@mui/material/Divider";
-import Typography from "@mui/material/Typography";
-import MenuItem from "@mui/material/MenuItem";
-import Drawer from "@mui/material/Drawer";
-import MenuIcon from "@mui/icons-material/Menu";
 import logo from "../logo1.svg";
-
-const logoStyle = {
-  width: "100px",
-  height: "60px",
-  cursor: "pointer",
-  marginBottom: "3px",
-  backgroundColor: "transparent",
-};
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 function Header({ mode, toggleColorMode }) {
   const [open, setOpen] = React.useState(false);
   let navigate = useNavigate();
 
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
-
-  const scrollToSection = (sectionId) => {
-    const sectionElement = document.getElementById(sectionId);
-    const offset = 128;
-    if (sectionElement) {
-      const targetScroll = sectionElement.offsetTop - offset;
-      sectionElement.scrollIntoView({ behavior: "smooth" });
-      window.scrollTo({
-        top: targetScroll,
-        behavior: "smooth",
-      });
-      setOpen(false);
-    }
-  };
-
   return (
-    <div className="pb-28">
-      <AppBar
-        position="fixed"
-        sx={{
-          boxShadow: 0,
-          bgcolor: "transparent",
-          backgroundImage: "none",
-          mt: 2,
-        }}
-      >
-        <Container maxWidth="lg">
-          <Toolbar
-            variant="regular"
-            sx={(theme) => ({
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexShrink: 0,
-              borderRadius: "999px",
-              bgcolor:
-                theme.palette.mode === "light"
-                  ? "rgba(255, 255, 255, 0.4)"
-                  : "rgba(0, 0, 0, 0.4)",
-              backdropFilter: "blur(24px)",
-              maxHeight: 40,
-              border: "1px solid",
-              borderColor: "divider",
-              boxShadow:
-                theme.palette.mode === "light"
-                  ? `0 0 1px rgba(85, 166, 246, 0.1), 1px 1.5px 2px -1px rgba(85, 166, 246, 0.15), 4px 4px 12px -2.5px rgba(85, 166, 246, 0.15)`
-                  : "0 0 1px rgba(2, 31, 59, 0.7), 1px 1.5px 2px -1px rgba(2, 31, 59, 0.65), 4px 4px 12px -2.5px rgba(2, 31, 59, 0.65)",
-            })}
-          >
-            <Box
-              sx={{
-                flexGrow: 1,
-                display: "flex",
-                alignItems: "center",
-                ml: "-18px",
-                px: 0,
-              }}
-            >
-              <Link to="/">
-                <img src={logo} style={logoStyle} alt="logo of cinema ticket" />
+    <header className="sticky top-0 z-50 bg-slate-50 shadow-lg">
+      <div className="container mx-auto px-4 h-14">
+        <div className="flex justify-between items-center h-14">
+          <Link to="/">
+            <img className="h-12" src={logo} alt="logo of cinema ticket" />
+          </Link>
+          <div className="px-5 transition-all duration-300 ease-in-out">
+            <div className="flex items-center justify-center">
+              <Link to="#" className="mr-4">
+                <img
+                  className="h-12 object-cover bg-transparent"
+                  src="https://png.pngtree.com/png-vector/20230227/ourmid/pngtree-golden-ticket-png-image_6621563.png"
+                  alt="Ticket"
+                />
               </Link>
-              <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                <MenuItem
-                  onClick={() => navigate("/management")}
-                  sx={{ py: "6px", px: "12px" }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Management
-                  </Typography>
-                </MenuItem>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: { xs: "none", md: "flex" },
-                gap: 0.5,
-                alignItems: "center",
-              }}
-            >
-              <Link to="/login">
-                <Button
-                  color="primary"
-                  variant="text"
-                  size="small"
-                  component="a"
-                  //href="login"
-                  target="_blank"
-                >
-                  Sign in
-                </Button>
-              </Link>
-              <Link to="/register">
-                <Button
-                  color="primary"
-                  variant="contained"
-                  size="small"
-                  component="a"
-                  // href="/register"
-                  target="_blank"
-                >
-                  Sign up
-                </Button>
-              </Link>
-            </Box>
-            <Box sx={{ display: { sm: "", md: "none" } }}>
-              <Button
-                variant="text"
-                color="primary"
-                aria-label="menu"
-                onClick={toggleDrawer(true)}
-                sx={{ minWidth: "30px", p: "4px" }}
-              >
-                <MenuIcon />
-              </Button>
-              <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
-                <Box
-                  sx={{
-                    minWidth: "60dvw",
-                    p: 2,
-                    backgroundColor: "background.paper",
-                    flexGrow: 1,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "end",
-                      flexGrow: 1,
-                    }}
-                  ></Box>
-                  <MenuItem onClick={() => scrollToSection("features")}>
-                    Features
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("testimonials")}>
-                    Testimonials
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("highlights")}>
-                    Highlights
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("pricing")}>
-                    Pricing
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection("faq")}>
-                    FAQ
-                  </MenuItem>
-                  <Divider />
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      component="a"
-                      href="/register"
-                      target="_blank"
-                      sx={{ width: "100%" }}
-                    >
-                      Sign up
-                    </Button>
-                  </MenuItem>
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      component="a"
-                      href="/material-ui/getting-started/templates/sign-in/"
-                      target="_blank"
-                      sx={{ width: "100%" }}
-                    >
-                      Sign in
-                    </Button>
-                  </MenuItem>
-                </Box>
-              </Drawer>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </div>
+              <div className="hover relative">
+                <div className="px-3 text-left md:cursor-pointer group hover:text-yellow-500 ease-out transition-all duration-300">
+                  <Link
+                    to="#"
+                    className="py-7 flex text-sm justify-between items-center md:pr-0 pr-5 group capitalize hover:text-yellow-500 transition-all duration-300"
+                  >
+                    Cinema Corner
+                    <span className="text-xs md:ml-0.5 mt-1 md:block hidden group-hover:text-yellow-500 transition-all duration-300 text-[#777777]">
+                      <KeyboardArrowDownIcon />
+                    </span>
+                  </Link>
+                  <div>
+                    <div className="absolute top-[65px] -left-[33px] hidden  group-hover:md:block hover:md:block z-[800]">
+                      <Box
+                        sx={{ boxShadow: 3 }}
+                        class="shadow-[rgba(100,100,111,0.2)_0px_7px_29px_0px]"
+                      >
+                        <div className="bg-white min-w-[190px]  text-center border border-white border-solid rounded-sm ">
+                          <ul>
+                            <li className="text-sm text-black hover:text-yellow-600 hover:pl-0.5 hover:border-l-4 capitalize hover:border-yellow-600 hover:bg-yellow-50 transition-all duration-300">
+                              <Link className="block py-2" to="/actor">
+                                Actor
+                              </Link>
+                            </li>
+                          </ul>
+                        </div>
+                      </Box>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 }
-
-Header.propTypes = {
-  mode: PropTypes.oneOf(["dark", "light"]).isRequired,
-  toggleColorMode: PropTypes.func.isRequired,
-};
 
 export default Header;

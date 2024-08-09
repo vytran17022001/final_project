@@ -23,6 +23,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const toCamelCase = (string) => {
   return string
@@ -82,6 +84,7 @@ const AsyncDataCell = ({ data, column }) => {
   React.useEffect(() => {
     const fetchData = async () => {
       const result = await formatData(data, column);
+      console.log(result);
       setFormattedData(result);
     };
 
@@ -90,7 +93,13 @@ const AsyncDataCell = ({ data, column }) => {
 
   return (
     <TableCell component="th" scope="row">
-      {formattedData !== null ? formattedData : "Loading..."}
+      {Array.isArray(formattedData) && formattedData.length > 0
+        ? formattedData.map((data) => (
+            <span className="border mr-2 p-2 ">{data}</span>
+          ))
+        : formattedData !== null
+        ? formattedData
+        : "Loading..."}
     </TableCell>
   );
 };
@@ -261,15 +270,21 @@ const TableComponent = ({ collection }) => {
                     ))}
 
                     <TableCell component="th" scope="row">
-                      <Button
-                        color="secondary"
+                      <EditIcon
+                        color="primary"
                         onClick={() => {
                           setOpenEdit(true);
                           setDataUpdate(row);
                         }}
-                      >
-                        Edit
-                      </Button>
+                        sx={{
+                          cursor: "pointer",
+                          "&:hover": {
+                            backgroundColor: "#e5e5e5",
+                            borderRadius: "5px",
+                          },
+                          fontSize: "22px",
+                        }}
+                      />
                       <Dialog
                         open={openEdit}
                         onClose={() => setOpenEdit(false)}
@@ -332,13 +347,20 @@ const TableComponent = ({ collection }) => {
                           <Button type="submit">Submit</Button>
                         </DialogActions>
                       </Dialog>
-                      <Button
+
+                      <DeleteForeverIcon
                         variant="outlined"
                         color="error"
+                        sx={{
+                          cursor: "pointer",
+                          "&:hover": {
+                            backgroundColor: "#e5e5e5",
+                            borderRadius: "5px",
+                          },
+                          fontSize: "25px",
+                        }}
                         onClick={() => handleDelete(row.id)}
-                      >
-                        Delete
-                      </Button>
+                      />
                     </TableCell>
                   </TableRow>
                 );
