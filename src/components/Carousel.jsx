@@ -21,7 +21,7 @@ export const Carousel = ({
   }, []);
 
   return (
-    <div className="overflow-hidden relative ">
+    <div className="overflow-hidden relative *:">
       <div
         className="flex transition-transform ease-out duration-500 " /*500ms*/
         style={{ transform: `translateX(-${curr * 100}%)` }}

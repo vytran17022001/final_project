@@ -13,7 +13,7 @@ function Header({ mode, toggleColorMode }) {
 
   return (
     <header className="sticky top-0 z-50 bg-slate-50 shadow-lg">
-      <div className="container mx-auto px-4 h-14">
+      <div className="container mx-auto px-4 h-16 max-w-screen-xl">
         <div className="flex justify-between items-center h-14">
           <Link to="/">
             <img className="h-12" src={logo} alt="logo of cinema ticket" />
@@ -28,13 +28,13 @@ function Header({ mode, toggleColorMode }) {
                 />
               </Link>
               <div className="hover relative">
-                <div className="px-3 text-left md:cursor-pointer group hover:text-yellow-500 ease-out transition-all duration-300">
+                <div className=" text-left md:cursor-pointer group hover:text-yellow-500 ease-out transition-all duration-300 ">
                   <Link
                     to="#"
-                    className="py-7 flex text-sm justify-between items-center md:pr-0 pr-5 group capitalize hover:text-yellow-500 transition-all duration-300"
+                    className="py-9 flex text-sm justify-between items-center md:pr-0 pr-5 group capitalize hover:text-yellow-500 transition-all duration-300"
                   >
                     Cinema Corner
-                    <span className="text-xs md:ml-0.5 mt-1 md:block hidden group-hover:text-yellow-500 transition-all duration-300 text-[#777777]">
+                    <span className="text-xs md:ml-0.5 mt-0.5 md:block hidden group-hover:text-yellow-500 transition-all duration-300 text-[#777777]">
                       <KeyboardArrowDownIcon />
                     </span>
                   </Link>
@@ -59,6 +59,9 @@ function Header({ mode, toggleColorMode }) {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="px-5 transition-all duration-300 ease-in-out">
+            <div className="flex items-center justify-center">oke</div>
           </div>
         </div>
       </div>

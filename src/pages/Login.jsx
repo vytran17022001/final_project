@@ -2,36 +2,21 @@ import React from "react";
 import getData from "../utils/getData";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { login } from "../utils/authen";
 
 const Login = () => {
   let navigate = useNavigate();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = { email, password };
-
-    const users = await getData("User");
-
-    const user = users.find((user) => user.email === data.email);
-
-    if (!user) {
-      alert("Email chua duoc tao");
-      return;
+    const res = await login(email, password);
+    if (res.success) {
+      // navigate("/");
+    } else {
+      alert(res.message);
     }
-
-    const passwordCorrect = users.find(
-      (user) => user.password === data.password
-    );
-
-    if (!passwordCorrect) {
-      alert("Sai mat khau");
-      return;
-    }
-
-    navigate("/");
   };
 
   return (

@@ -1,12 +1,10 @@
 import React from "react";
 import TableComponent from "../../components/TableComponent";
 
-const Order = () => {
+export const Order = () => {
   return (
     <>
       <TableComponent collection="order" />
     </>
   );
 };
-
-export default Order;

@@ -96,14 +96,6 @@ export const mainListItems = (
         <ListItemText primary="Showtime" />
       </ListItemButton>
     </Link>
-    <Link to="/management/ticket">
-      <ListItemButton>
-        <ListItemIcon>
-          <ConfirmationNumberIcon />
-        </ListItemIcon>
-        <ListItemText primary="Ticket" />
-      </ListItemButton>
-    </Link>
     <Link to="/management/payment">
       <ListItemButton>
         <ListItemIcon>

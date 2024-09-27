@@ -5,7 +5,7 @@ const Management = () => {
   return (
     <>
       <div className="container mx-auto px-10">
-        <TableComponent collection="Management" />
+        <TableComponent collection="Dashboard" />
       </div>
     </>
   );

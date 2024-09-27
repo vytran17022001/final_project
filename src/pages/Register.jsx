@@ -3,6 +3,7 @@ import postData from "../utils/postData";
 import getData from "../utils/getData";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { register } from "../utils/authen";
 
 const Register = () => {
   let navigate = useNavigate();
@@ -12,20 +13,12 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = { email, password };
-
-    const users = await getData("User");
-
-    const user = users.find((user) => user.email === data.email);
-
-    if (user) {
-      alert("Email đã tồn tại");
-      return;
+    const res = await register(email, password);
+    if (res.success === true) {
+      navigate("/login");
+    } else {
+      alert(res.message);
     }
-
-    await postData("User", data);
-
-    navigate("/login");
   };
 
   return (
@@ -115,7 +108,6 @@ const Register = () => {
                     onClick={(e) => {
                       e.preventDefault(); //chan su kien mac dinh
                       navigate("/login");
-                      console.log(email, password);
                     }}
                     class="font-medium text-blue-600 hover:underline dark:text-blue-500"
                   >

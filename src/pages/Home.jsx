@@ -2,16 +2,18 @@ import React from "react";
 import { Carousel } from "../components/Carousel";
 import getData from "../utils/getData";
 import { Link } from "react-router-dom";
+import { UserContext } from "../App";
 
 const slides = [
   "https://cdn.galaxycine.vn/media/2024/7/10/my-boo-2048_1720598615672.jpg",
-  "https://cdn.galaxycine.vn/media/2024/7/22/deadpool--wolverine-2048_1721640524779.jpg",
+  "https://cdn.galaxycine.vn/media/2024/8/30/beetlejuice-beetlejuice-ma-sieu-quay-2048_1724988933786.jpg",
   "https://cdn.galaxycine.vn/media/2024/7/15/tham-tu-lung-danh-conan-ngoi-sao-5-canh-1-trieu-do-1_1721026295817.jpg",
   "https://cdn.galaxycine.vn/media/2024/7/19/hijack-1971-3_1721360507270.jpg",
 ];
 
 const Home = () => {
   const [movies, setMovies] = React.useState([]);
+  const user = React.useContext(UserContext);
 
   const fetchData = async () => {
     const result = await getData("movie");
@@ -24,15 +26,16 @@ const Home = () => {
 
   return (
     <>
-      <div class="carousel relative  mx-auto ">
+      <h2>{`Hello ${user ? user.user_email : "guest"}`}</h2>
+      <div class="carousel relative  mx-auto">
         <Carousel autoSlide={true}>
           {slides.map((s) => (
-            <img src={s} alt="" />
+            <img src={s} alt="" className="" />
           ))}
         </Carousel>
       </div>
       <section class="bg-white py-8">
-        <div class="container mx-auto flex items-center flex-wrap pt-4 pb-12">
+        <div class="container mx-auto max-w-screen-xl flex items-center flex-wrap pt-4 pb-12">
           <nav id="store" class="w-full z-30 top-0 px-6 py-1">
             <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3">
               <Link
