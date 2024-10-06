@@ -1,18 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { login } from "../utils/authen";
+import { AuthContext } from "../context/AuthContext";
+import { postLogin } from "../utils/authen";
 
 const Login = () => {
+  const { login } = React.useContext(AuthContext);
   let navigate = useNavigate();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await login(email, password);
+    const res = await postLogin(email, password);
 
     if (res.success) {
+      login(res.data);
+
       if (res.isAdmin) return navigate("/management");
 
       const url = document.location.search;

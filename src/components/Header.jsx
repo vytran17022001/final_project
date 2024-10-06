@@ -6,10 +6,11 @@ import getData from "../utils/getData";
 
 import logo from "../logo1.svg";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { AuthContext } from "../context/AuthContext";
 
 function Header({ mode, toggleColorMode }) {
+  const { user, logout } = React.useContext(AuthContext);
   const [open, setOpen] = React.useState(false);
-  let navigate = useNavigate();
 
   return (
     <header className="sticky top-0 z-50 bg-slate-50 shadow-lg">
@@ -61,7 +62,10 @@ function Header({ mode, toggleColorMode }) {
             </div>
           </div>
           <div className="px-5 transition-all duration-300 ease-in-out">
-            <div className="flex items-center justify-center">oke</div>
+            <div className="flex items-center justify-center">
+              <h2>{`Hello ${user ? user.user_email : "guest"}`}</h2>
+              <button onClick={(e) => logout()}>logout</button>
+            </div>
           </div>
         </div>
       </div>

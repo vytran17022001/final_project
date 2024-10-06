@@ -38,7 +38,7 @@ export const register = async (email, password) => {
   return res;
 };
 
-export const login = async (email, password) => {
+export const postLogin = async (email, password) => {
   const res = {
     success: false,
     message: "",
@@ -70,15 +70,6 @@ export const login = async (email, password) => {
   res.isAdmin = isAdmin;
   res.success = true;
   res.message = "Dang nhap thanh cong";
-
-  localStorage.setItem(
-    "user",
-    JSON.stringify({
-      user_email: user.user_email,
-      id: user.id,
-      isAdmin,
-    })
-  );
 
   return res;
 };

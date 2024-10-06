@@ -2,7 +2,7 @@ import React from "react";
 import { Carousel } from "../components/Carousel";
 import getData from "../utils/getData";
 import { Link } from "react-router-dom";
-import { UserContext } from "../App";
+import { AuthContext } from "../context/AuthContext";
 
 const slides = [
   "https://cdn.galaxycine.vn/media/2024/7/10/my-boo-2048_1720598615672.jpg",
@@ -13,7 +13,7 @@ const slides = [
 
 const Home = () => {
   const [movies, setMovies] = React.useState([]);
-  const user = React.useContext(UserContext);
+  // const user = React.useContext(AuthContext);
 
   const fetchData = async () => {
     const result = await getData("movie");
@@ -26,7 +26,6 @@ const Home = () => {
 
   return (
     <>
-      <h2>{`Hello ${user ? user.user_email : "guest"}`}</h2>
       <div class="carousel relative  mx-auto">
         <Carousel autoSlide={true}>
           {slides.map((s) => (

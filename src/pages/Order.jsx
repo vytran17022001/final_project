@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import postData from "../utils/postData";
 import { useNavigate, useParams } from "react-router-dom";
 import getData from "../utils/getData";
-import { UserContext } from "../App";
+import { AuthContext } from "../context/AuthContext";
 
 export const Order = () => {
   const { showtimeId } = useParams();
   const [selectedSeat, setSelectedSeat] = React.useState([]);
   const [boughtSeat, setBoughtSeat] = React.useState([]);
-  const user = React.useContext(UserContext);
+  const { user } = React.useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSet = (seatId) => {

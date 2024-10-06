@@ -22,19 +22,19 @@ import Payment from "./pages/management/Payment";
 import Showtime from "./pages/management/Showtime";
 import MovieDetail from "./pages/MovieDetail";
 import { CheckRole } from "./utils/checkRole";
+import { AuthContext, AuthProvider } from "./context/AuthContext";
 
-export const UserContext = createContext();
 // Route (duong di) cua trang web
 // Authentication
 export default function App() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  // const { user } = React.useContext(AuthContext);
 
   return (
-    <UserContext.Provider value={user}>
+    <AuthProvider>
       <Router>
         <Routes>
           <Route
-            element={<CheckRole isAdmin={(user && user.isAdmin) || false} />}
+          // element={<CheckRole isAdmin={(user && user.isAdmin) || false} />}
           >
             <Route element={<AdminLayout />}>
               <Route path="/management/role" element={<Role />} />
@@ -71,6 +71,6 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
-    </UserContext.Provider>
+    </AuthProvider>
   );
 }
