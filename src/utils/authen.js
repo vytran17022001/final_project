@@ -61,13 +61,23 @@ export const login = async (email, password) => {
     res.message = "Password wrong";
     return res;
   }
+  const roleId = user.role_id;
+  const roleList = await getData("role");
+  const role = roleList.find((r) => r.id === roleId);
+  const isAdmin = role && role.role_name ? role.role_name === "Admin" : false;
+
   res.data = user;
+  res.isAdmin = isAdmin;
   res.success = true;
   res.message = "Dang nhap thanh cong";
 
   localStorage.setItem(
     "user",
-    JSON.stringify({ user_email: user.user_email, id: user.id })
+    JSON.stringify({
+      user_email: user.user_email,
+      id: user.id,
+      isAdmin,
+    })
   );
 
   return res;

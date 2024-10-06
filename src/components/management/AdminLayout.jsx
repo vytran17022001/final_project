@@ -21,8 +21,9 @@ import { mainListItems } from "./listItems";
 import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
-import { Outlet } from "react-router-dom";
+import { Outlet, redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../App";
 
 function Copyright(props) {
   return (

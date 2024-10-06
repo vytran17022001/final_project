@@ -1,5 +1,4 @@
 import React from "react";
-import getData from "../utils/getData";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { login } from "../utils/authen";
@@ -12,8 +11,15 @@ const Login = () => {
     e.preventDefault();
 
     const res = await login(email, password);
+
     if (res.success) {
-      // navigate("/");
+      if (res.isAdmin) return navigate("/management");
+
+      const url = document.location.search;
+      const oldUrl = url.split("=")[1];
+      if (oldUrl) return navigate(oldUrl);
+
+      navigate("/");
     } else {
       alert(res.message);
     }

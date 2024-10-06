@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import postData from "../utils/postData";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import getData from "../utils/getData";
+import { UserContext } from "../App";
 
 export const Order = () => {
   const { showtimeId } = useParams();
   const [selectedSeat, setSelectedSeat] = React.useState([]);
   const [boughtSeat, setBoughtSeat] = React.useState([]);
+  const user = React.useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleSet = (seatId) => {
     if (boughtSeat.includes(seatId)) {
@@ -22,14 +25,20 @@ export const Order = () => {
   };
 
   const handlePay = async (e) => {
-    if (selectedSeat.length === 0) alert("Please select seat");
+    if (selectedSeat.length === 0) return alert("Please select seat");
+    if (!user) {
+      // context
+      alert("Please login");
+      const oldUrl = document.location.pathname;
+      return navigate(`/login?oldUrl=${oldUrl}`); // useNavigate
+    }
     // if (selectedSeat.length === 0) alert("Please select seat");
 
     await postData("order", {
       createdAt: new Date(),
       order_isPaid: false,
       showtime_id: showtimeId,
-      user_id: "439a578b-eca3-462a-9a46-bb3c98655263",
+      user_id: user.id,
       order_chair: selectedSeat,
     })
       .then(() => alert("Da mua thanh cong"))
