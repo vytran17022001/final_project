@@ -4,9 +4,11 @@ import getData from "../utils/getData";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { register } from "../utils/authen";
+import { AuthContext } from "../context/AuthProvider";
 
 const Register = () => {
   let navigate = useNavigate();
+  const { user } = React.useContext(AuthContext);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
@@ -21,6 +23,9 @@ const Register = () => {
     }
   };
 
+  if (user) {
+    navigate("/");
+  }
   return (
     <>
       <section class="bg-gray-50 dark:bg-gray-900 mt-20">

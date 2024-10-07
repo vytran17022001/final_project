@@ -23,7 +23,8 @@ import Deposits from "./Deposits";
 import Orders from "./Orders";
 import { Outlet, redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { UserContext } from "../../App";
+import { AuthContext } from "../../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -93,10 +94,19 @@ const Drawer = styled(MuiDrawer, {
 const defaultTheme = createTheme();
 
 export default function Adi() {
+  const { user, logout } = React.useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  React.useEffect(() => {
+    if (!user) {
+      return navigate("/");
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -141,10 +151,20 @@ export default function Adi() {
             sx={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
               px: [1],
             }}
           >
+            {user && user.avatar && <img src={user.avatar} />}
+            <h2>{`${user && user.user_email ? user.user_email : ""}`}</h2>
+            <button
+              onClick={(e) => {
+                logout();
+                navigate("/");
+              }}
+            >
+              logout
+            </button>
             <IconButton onClick={toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>

@@ -7,7 +7,6 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Role from "./pages/management/Role";
 import Direction from "./pages/management/Direction";
-import Management from "./pages/management/Management";
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 import AdminLayout from "./components/management/AdminLayout";
@@ -22,7 +21,7 @@ import Payment from "./pages/management/Payment";
 import Showtime from "./pages/management/Showtime";
 import MovieDetail from "./pages/MovieDetail";
 import { CheckRole } from "./utils/checkRole";
-import { AuthContext, AuthProvider } from "./context/AuthContext";
+import { AuthContext, AuthProvider } from "./context/AuthProvider";
 
 // Route (duong di) cua trang web
 // Authentication
@@ -46,7 +45,6 @@ export default function App() {
               <Route path="/management/user" element={<User />} />
               <Route path="/management/order" element={<ManagementOrder />} />
               <Route path="/management/payment" element={<Payment />} />
-              <Route path="/management" element={<Management />} />
             </Route>
           </Route>
 

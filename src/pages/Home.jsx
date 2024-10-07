@@ -2,7 +2,7 @@ import React from "react";
 import { Carousel } from "../components/Carousel";
 import getData from "../utils/getData";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../context/AuthProvider";
 
 const slides = [
   "https://cdn.galaxycine.vn/media/2024/7/10/my-boo-2048_1720598615672.jpg",

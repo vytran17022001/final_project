@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../context/AuthProvider";
 import { postLogin } from "../utils/authen";
 
 const Login = () => {
-  const { login } = React.useContext(AuthContext);
+  const { user, login } = React.useContext(AuthContext);
   let navigate = useNavigate();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -17,7 +17,7 @@ const Login = () => {
     if (res.success) {
       login(res.data);
 
-      if (res.isAdmin) return navigate("/management");
+      if (res.isAdmin) return navigate("/management/user");
 
       const url = document.location.search;
       const oldUrl = url.split("=")[1];
@@ -28,7 +28,9 @@ const Login = () => {
       alert(res.message);
     }
   };
-
+  if (user) {
+    navigate("/");
+  }
   return (
     <>
       <section class="bg-gray-50 dark:bg-gray-900">

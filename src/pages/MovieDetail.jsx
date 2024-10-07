@@ -94,22 +94,10 @@ const MovieDetail = () => {
                 <div class="time__show flex flex-1 flex-row gap-x-3 gap-y-1 flex-wrap">
                   {showtimes &&
                     showtimes.map((st) => {
-                      const result = new Date(
-                        st.showtime_timedate.seconds * 1000
-                      );
-                      const resHous =
-                        result.getHours() < 10
-                          ? "0" + result.getHours()
-                          : result.getHours();
-                      const resMinutes =
-                        result.getMinutes() < 10
-                          ? "0" + result.getMinutes([])
-                          : result.getMinutes();
-
                       return (
                         <Link to={`/movie/${id}/showtime/${st.id}/order`}>
                           <button class="py-2 md:px-8 px-6 border rounded text-sm font-normal text-black-10 hover:bg-blue-500 active:bg-blue-500  transition-all duration-500 ease-in-out hover:text-white">
-                            {`${resHous}:${resMinutes}`}
+                            {st.showtime_timedate.split(" ")[1]}
                           </button>
                         </Link>
                       );

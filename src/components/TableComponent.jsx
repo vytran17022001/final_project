@@ -18,6 +18,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
+import dayjs from "dayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -26,7 +32,13 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
+// Viet hoa ten
 const toCamelCase = (string) => {
+  if (string.includes("_id")) {
+    const arr = string.split("_");
+    return arr[0].charAt(0).toUpperCase() + arr[0].slice(1);
+  }
+
   return string
     .toLowerCase()
     .split("_")
@@ -40,8 +52,8 @@ const toCamelCase = (string) => {
     .join(" ");
 };
 
+// Kiem tra kieu du lieu -< string thi ra text -> Ngay thi ra datetime -> boolean thi ra do xanh
 const formatData = async (data, column) => {
-  console.log(typeof data);
   if (typeof data === "object" && data.seconds) {
     const result = new Date(data.seconds * 1000);
     return result.toLocaleString();
@@ -51,17 +63,17 @@ const formatData = async (data, column) => {
     const json = await getData(collection);
 
     const rs = json.find((json) => json.id === data) || [];
-    console.log(rs);
 
     const col = Object.keys(rs).find(
       (key) =>
         key.includes("_name") ||
         key.includes("_chair") ||
-        key.includes("_timedate")
+        key.includes("_timedate") ||
+        key.includes("_email")
     );
-    console.log(rs[col]);
 
-    if (rs[col].seconds) {
+    // Khi di goi tu bang khac va co datetime -> XU ly ngay thang
+    if (rs[col] && rs[col].seconds) {
       const result = new Date(rs[col].seconds * 1000);
       return result.toLocaleString();
     }
@@ -78,13 +90,13 @@ const formatData = async (data, column) => {
   }
 };
 
+// Doi. du lieu tu bang khac
 const AsyncDataCell = ({ data, column }) => {
   const [formattedData, setFormattedData] = React.useState(null);
 
   React.useEffect(() => {
     const fetchData = async () => {
       const result = await formatData(data, column);
-      console.log(result);
       setFormattedData(result);
     };
 
@@ -118,7 +130,9 @@ const TableComponent = ({ collection }) => {
   const fetchData = async () => {
     const data = await getData(collection);
     setData(data);
+    console.log(data);
 
+    // Lay ten cot set vao State
     data.forEach((item) => {
       Object.keys(item).forEach((key) => {
         if (key !== "id") {
@@ -126,17 +140,17 @@ const TableComponent = ({ collection }) => {
         }
       });
     });
-
     const names = [...keys];
-
     setColumnName(names);
 
+    // Lay nhung cot chua _id (tu bang khac) di goi du lieu
     names.map(async (col) => {
       if (col.includes("_id")) {
-        const collectName = col.split("_id")[0];
-        const data = await getData(collectName);
-        const newData = { [col]: [...data] };
+        const collectName = col.split("_id")[0]; // Cat lay ten collection. Example: role_id -> role -> goi tu Role
+        const data = await getData(collectName); // Goi du lieu tu collecton do
+        const newData = { [col]: [...data] }; // Rai tat ca du lieu tu role
 
+        // Set du lieu moi cua cot _id vao State
         setDataChild((prevdataChild) => ({
           ...prevdataChild,
           ...newData,
@@ -218,6 +232,17 @@ const TableComponent = ({ collection }) => {
                 </FormControl>
               );
             }
+
+            if (col.includes("_createdAt") || col.includes("_timedate")) {
+              return (
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={["DateTimePicker"]}>
+                    <DateTimePicker label={toCamelCase(col)} name={col} />
+                  </DemoContainer>
+                </LocalizationProvider>
+              );
+            }
+
             return (
               <TextField
                 margin="dense"
@@ -232,6 +257,7 @@ const TableComponent = ({ collection }) => {
                 } // TODO
                 fullWidth
                 variant="standard"
+                required
               />
             );
           })}
@@ -248,9 +274,11 @@ const TableComponent = ({ collection }) => {
             <TableRow>
               <TableCell>No</TableCell>
               {columnName &&
-                columnName.map((key) => (
-                  <TableCell>{toCamelCase(key)}</TableCell>
-                ))}
+                columnName.map((key) => {
+                  if (key.includes("password")) return null;
+
+                  return <TableCell>{toCamelCase(key)}</TableCell>;
+                })}
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
@@ -265,9 +293,12 @@ const TableComponent = ({ collection }) => {
                     <TableCell component="th" scope="row">
                       {index + 1}
                     </TableCell>
-                    {columnName.map((key) => (
-                      <AsyncDataCell key={key} data={row[key]} column={key} />
-                    ))}
+                    {columnName.map((key) => {
+                      if (key.includes("password")) return null;
+                      return (
+                        <AsyncDataCell key={key} data={row[key]} column={key} />
+                      );
+                    })}
 
                     <TableCell component="th" scope="row">
                       <EditIcon
@@ -286,6 +317,7 @@ const TableComponent = ({ collection }) => {
                         }}
                       />
                       <Dialog
+                        style={{ marginBottom: "80px" }}
                         open={openEdit}
                         onClose={() => setOpenEdit(false)}
                         PaperProps={{
@@ -315,30 +347,85 @@ const TableComponent = ({ collection }) => {
                       >
                         <DialogTitle>Edit {collection}</DialogTitle>
                         <DialogContent>
-                          {columnName.map((col) => (
-                            <TextField
-                              autoFocus
-                              margin="dense"
-                              name={col}
-                              label={toCamelCase(col)}
-                              value={dataUpdate[col]}
-                              onChange={(e) => {
-                                setDataUpdate({
-                                  ...dataUpdate,
-                                  [col]: e.target.value,
-                                });
-                              }}
-                              type={
-                                col === "password"
-                                  ? "password"
-                                  : col === "email"
-                                  ? "email"
-                                  : "text"
-                              } // TODO
-                              fullWidth
-                              variant="standard"
-                            />
-                          ))}
+                          {columnName.map((col) => {
+                            if (col.includes("_id")) {
+                              // Col: user_name, role_id, ...
+                              // Ten cot: User Name, Role ID, User GMAIL
+                              // toCamelCase: user_name -> User Name
+                              const name = col.split("_id")[0];
+
+                              return (
+                                <FormControl fullWidth>
+                                  <InputLabel id="demo-simple-select-label">
+                                    {toCamelCase(col)}
+                                  </InputLabel>
+                                  <Select
+                                    defaultValue={dataUpdate[col]}
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    name={col}
+                                    label={col}
+                                  >
+                                    {dataChild[col] &&
+                                      dataChild[col].map((child) => {
+                                        return (
+                                          <MenuItem value={child.id}>
+                                            {child[name + "_name"]}
+                                          </MenuItem>
+                                        );
+                                      })}
+                                  </Select>
+                                </FormControl>
+                              );
+                            }
+                            if (
+                              col.includes("_createdAt") ||
+                              col.includes("showtime_timedate")
+                            ) {
+                              return (
+                                <LocalizationProvider
+                                  dateAdapter={AdapterDayjs}
+                                >
+                                  <DemoContainer
+                                    components={["DateTimePicker"]}
+                                  >
+                                    <DateTimePicker
+                                      label={toCamelCase(col)}
+                                      name={col}
+                                      defaultValue={dayjs(dataUpdate[col])}
+                                    />
+                                  </DemoContainer>
+                                </LocalizationProvider>
+                              );
+                            }
+                            return (
+                              <TextField
+                                autoFocus
+                                margin="dense"
+                                name={col}
+                                label={toCamelCase(col)}
+                                value={dataUpdate[col]}
+                                onChange={(e) => {
+                                  if (col.includes("password")) return;
+                                  if (col.includes("email")) return;
+
+                                  setDataUpdate({
+                                    ...dataUpdate,
+                                    [col]: e.target.value,
+                                  });
+                                }}
+                                type={
+                                  col === "password"
+                                    ? "password"
+                                    : col === "email"
+                                    ? "email"
+                                    : "text"
+                                } // TODO
+                                fullWidth
+                                variant="standard"
+                              />
+                            );
+                          })}
                         </DialogContent>
                         <DialogActions>
                           <Button onClick={() => setOpenEdit(false)}>

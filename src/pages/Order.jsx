@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import postData from "../utils/postData";
 import { useNavigate, useParams } from "react-router-dom";
 import getData from "../utils/getData";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../context/AuthProvider";
 
 export const Order = () => {
   const { showtimeId } = useParams();
@@ -35,7 +35,7 @@ export const Order = () => {
     // if (selectedSeat.length === 0) alert("Please select seat");
 
     await postData("order", {
-      createdAt: new Date(),
+      order_createdAt: new Date(),
       order_isPaid: false,
       showtime_id: showtimeId,
       user_id: user.id,
@@ -107,9 +107,6 @@ export const Order = () => {
             );
           })}
         </div>
-        <span className="absolute -right-10 top-1/2 -translate-y-1/2 text-sm text-grey-40 font-semibold flex-none  w-5 ">
-          {name}
-        </span>
       </div>
     );
   };
