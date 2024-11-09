@@ -64,49 +64,50 @@ export const Order = () => {
         <span className="absolute -left-10 top-1/2 -translate-y-1/2 text-sm text-grey-40 font-semibold flex-none  w-5 ">
           {name}
         </span>
-        <div
-          className={`flex gap-4  
-            ${isDouble ? "" : ""}`}
-        >
-          {Array.from({ length: quantity }, (_, i) => {
-            i++;
-            return isDouble ? (
-              <button
-                className={`md:h-5 h-4 border rounded md:text-s text-[10px] md:w-12 w-8  border-blue-300 ${
-                  selectedSeat.includes(`${name}${i}`)
-                    ? "bg-yellow-300 text-white"
-                    : "text-black transition duration-200 ease-in-out hover:bg-yellow-200 hover:border-transparent"
-                }`}
-                onClick={() => {
-                  handleSet(`${name}${i}`);
-                }}
-              >
-                <span className="inline-block text-center  ">
-                  {i} {i}
-                </span>
-              </button>
-            ) : (
-              <button
-                className={` md:h-5 h-4 border rounded md:text-s text-[10px] md:w-5 w-4 border-gray-300 ${
-                  selectedSeat.includes(`${name}${i}`)
-                    ? "bg-yellow-300 text-white"
-                    : "text-black transition duration-200 ease-in-out hover:bg-yellow-200 hover:border-transparent"
-                } 
+        {Array.from({ length: quantity }, (_, i) => {
+          i++;
+          return isDouble ? (
+            <button
+              className={`md:h-5 h-4 border rounded md:text-s text-[10px] md:w-12 w-8  border-blue-300 ${
+                selectedSeat.includes(`${name}${i}`)
+                  ? "bg-yellow-300 text-white"
+                  : "text-black transition duration-200 ease-in-out hover:bg-yellow-200 hover:border-transparent"
+              }
+              ${
+                boughtSeat.includes(`${name}${i}`)
+                  ? "bg-gray-400 hover:!bg-gray-400 cursor-not-allowed"
+                  : ""
+              }
+              `}
+              onClick={() => {
+                handleSet(`${name}${i}`);
+              }}
+            >
+              <span className="inline-block text-center  ">
+                {i} {i}
+              </span>
+            </button>
+          ) : (
+            <button
+              className={` md:h-5 h-4 border rounded md:text-s text-[10px] md:w-5 w-4 border-gray-300 ${
+                selectedSeat.includes(`${name}${i}`)
+                  ? "bg-yellow-300 text-white"
+                  : "text-black transition duration-200 ease-in-out hover:bg-yellow-200 hover:border-transparent"
+              } 
                 ${
                   boughtSeat.includes(`${name}${i}`)
                     ? "bg-gray-400 hover:!bg-gray-400 cursor-not-allowed"
                     : ""
                 }
                 `}
-                onClick={() => {
-                  handleSet(`${name}${i}`);
-                }}
-              >
-                <span className="inline-block text-center ">{i}</span>
-              </button>
-            );
-          })}
-        </div>
+              onClick={() => {
+                handleSet(`${name}${i}`);
+              }}
+            >
+              <span className="inline-block text-center ">{i}</span>
+            </button>
+          );
+        })}
       </div>
     );
   };

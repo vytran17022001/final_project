@@ -97,7 +97,9 @@ const MovieDetail = () => {
                       return (
                         <Link to={`/movie/${id}/showtime/${st.id}/order`}>
                           <button class="py-2 md:px-8 px-6 border rounded text-sm font-normal text-black-10 hover:bg-blue-500 active:bg-blue-500  transition-all duration-500 ease-in-out hover:text-white">
-                            {st.showtime_timedate.split(" ")[1]}
+                            {`${st.showtime_timedate.split(" ")[1]} ${
+                              st.showtime_timedate.split(" ")[2]
+                            }`}
                           </button>
                         </Link>
                       );

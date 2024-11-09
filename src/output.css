@@ -620,10 +620,6 @@ video {
   left: -33px;
 }
 
-.-right-10 {
-  right: -2.5rem;
-}
-
 .-right-\[500px\] {
   right: -500px;
 }
@@ -785,10 +781,6 @@ video {
 
 .mt-8 {
   margin-top: 2rem;
-}
-
-.mb-20 {
-  margin-bottom: 5rem;
 }
 
 .block {
