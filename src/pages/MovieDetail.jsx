@@ -37,8 +37,8 @@ const MovieDetail = () => {
 
   return (
     <main className="bg-white">
-      <div class="grid grid-cols-3 gap-6 mx-auto max-w-screen-xl py-7 px-4 pb-6 pt-16 sm:px-6 lg:px-5 lg:pt-8">
-        <div className="col-span-2">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mx-auto max-w-screen-xl py-7 px-4 pb-6 pt-16 sm:px-6 lg:px-8 lg:pt-8">
+        <div className="lg:col-span-2">
           <section class="">
             <div class=" max-w-screen-xl mx-auto px-4">
               <div class="text-center">
@@ -97,9 +97,7 @@ const MovieDetail = () => {
                       return (
                         <Link to={`/movie/${id}/showtime/${st.id}/order`}>
                           <button class="py-2 md:px-8 px-6 border rounded text-sm font-normal text-black-10 hover:bg-blue-500 active:bg-blue-500  transition-all duration-500 ease-in-out hover:text-white">
-                            {`${st.showtime_timedate.split(" ")[1]} ${
-                              st.showtime_timedate.split(" ")[2]
-                            }`}
+                            {`${st.showtime_timedate.split(" ")[1]}`}
                           </button>
                         </Link>
                       );
@@ -109,7 +107,7 @@ const MovieDetail = () => {
             </div>
           </div>
         </div>
-        <div className=" block break-words">
+        <div className="lg:col-span-1 break-words">
           hiádaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         </div>
       </div>

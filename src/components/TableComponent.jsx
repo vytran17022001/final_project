@@ -188,10 +188,6 @@ const TableComponent = ({ collection }) => {
             const formJson = Object.fromEntries(formData.entries()); // chuyen form thanh json
             columnName.map((col) => {
               formJson[col] = formJson[col].trim(); // xoa khoang trang dau va cuoi cung
-              // if (!formJson[col]) {
-              //   alert(`${toCamelCase(col)} khong duoc de trong`);
-              //   return;
-              // }
             });
             await postData(collection, formJson);
             fetchData();

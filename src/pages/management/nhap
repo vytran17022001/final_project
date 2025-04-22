@@ -1,0 +1,65 @@
+{
+  /* <div className="mb-4">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setOpen(true)}
+          >
+            Create User
+          </Button>
+          <Dialog
+            open={open}
+            onClose={() => setOpen(false)}
+            PaperProps={{
+              component: "form",
+              onSubmit: async (event) => {
+                event.preventDefault(); // chan gui mac dinh
+
+                const formData = new FormData(event.currentTarget); // Goi form
+                const formJson = Object.fromEntries(formData.entries()); // chuyen form thanh json
+
+                await postData("user", formJson);
+                fetchData();
+
+                setOpen(false);
+              },
+            }}
+          >
+            <DialogTitle>Create User</DialogTitle>
+            <DialogContent>
+              <Select name="role_id" defaultValue="" fullWidth required>
+                {showtimes.map((time) => (
+                  <MenuItem key={time.id} value={time.id}>
+                    {time.showtime_timedate}
+                  </MenuItem>
+                ))}
+              </Select>
+              <TextField
+                autoFocus
+                required
+                margin="dense"
+                name="user_email"
+                label="User Email"
+                type="email"
+                fullWidth
+                variant="standard"
+              />
+              <TextField
+                autoFocus
+                required
+                margin="dense"
+                name="user_password"
+                label="User Password"
+                type="password"
+                fullWidth
+                variant="standard"
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setOpen(false)}>Cancel</Button>
+              <Button type="submit">Submit</Button>
+            </DialogActions>
+          </Dialog>
+        </div> */
+}
+
