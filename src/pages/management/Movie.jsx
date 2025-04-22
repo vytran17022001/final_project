@@ -141,6 +141,17 @@ const Movie = () => {
 
               <TextField
                 margin="dense"
+                name="movie_content"
+                label="Movie Content"
+                type="text"
+                fullWidth
+                required
+                variant="standard"
+                sx={{ mb: 2 }}
+              />
+
+              <TextField
+                margin="dense"
                 name="movie_country"
                 label="Movie Country"
                 type="text"
@@ -149,7 +160,6 @@ const Movie = () => {
                 variant="standard"
                 sx={{ mb: 2 }}
               />
-
               <LocalizationProvider
                 fullWidth
                 margin="dense"
@@ -245,6 +255,9 @@ const Movie = () => {
                   <strong>Movie Direction</strong>
                 </TableCell>
                 <TableCell>
+                  <strong>Movie Content</strong>
+                </TableCell>
+                <TableCell>
                   <strong>Movie Country</strong>
                 </TableCell>
                 <TableCell>
@@ -277,6 +290,7 @@ const Movie = () => {
                   <TableCell>{row.actorName}</TableCell>
                   <TableCell>{row.categoryName}</TableCell>
                   <TableCell>{row.directionName}</TableCell>
+                  <TableCell>{row.movie_content}</TableCell>
                   <TableCell>{row.movie_country}</TableCell>
                   <TableCell>
                     {dayjs(row.movie_createdAt).format("DD/MM/YYYY HH:mm")}
@@ -286,6 +300,7 @@ const Movie = () => {
                   <TableCell>{row.movie_name}</TableCell>
                   <TableCell>{row.movie_price}</TableCell>
                   <TableCell>{row.movie_rating}</TableCell>
+
                   <TableCell>
                     <EditIcon
                       color="primary"
@@ -376,7 +391,25 @@ const Movie = () => {
                             })
                           }
                         />
-
+                        <TextField
+                          margin="dense"
+                          name="movie_content"
+                          label="Movie Content"
+                          type="text"
+                          multiline
+                          minRows={3}
+                          fullWidth
+                          required
+                          variant="standard"
+                          sx={{ mb: 2 }}
+                          value={dataUpdate.movie_content || ""}
+                          onChange={(e) =>
+                            setDataUpdate({
+                              ...dataUpdate,
+                              movie_content: e.target.value,
+                            })
+                          }
+                        />
                         <TextField
                           margin="dense"
                           name="movie_country"

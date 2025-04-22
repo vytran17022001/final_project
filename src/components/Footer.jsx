@@ -12,7 +12,7 @@ const logoStyle = {
 
 const Footer = () => {
   return (
-    <footer className="bg-stone-200 ">
+    <footer className="bg-stone-200  mt-6">
       <div class="mx-auto max-w-screen-xl px-4 pb-6 pt-16 sm:px-6 lg:px-5 lg:pt-8 ">
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
