@@ -93,10 +93,6 @@ export const Order = () => {
             );
           })}
         </div>
-
-        <span className="absolute right-0 top-1/2 -translate-y-1/2 text-sm text-gray-500 font-semibold w-4 text-center">
-          {name}
-        </span>
       </div>
     );
   };

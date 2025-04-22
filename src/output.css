@@ -877,10 +877,6 @@ video {
   height: 100%;
 }
 
-.w-12 {
-  width: 3rem;
-}
-
 .w-2 {
   width: 0.5rem;
 }
@@ -916,6 +912,10 @@ video {
 .w-max {
   width: -webkit-max-content;
   width: max-content;
+}
+
+.w-12 {
+  width: 3rem;
 }
 
 .min-w-\[190px\] {
@@ -2003,12 +2003,12 @@ body {
 }
 
 @media (min-width: 768px) {
-  .md\:col-span-1 {
-    grid-column: span 1 / span 1;
-  }
-
   .md\:col-span-2 {
     grid-column: span 2 / span 2;
+  }
+
+  .md\:col-span-1 {
+    grid-column: span 1 / span 1;
   }
 
   .md\:ml-0 {
