@@ -21,7 +21,7 @@ import TextField from "@mui/material/TextField";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 
-const Direction = () => {
+export const Direction = () => {
   const [data, setData] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [openEdit, setOpenEdit] = React.useState(false);
@@ -81,6 +81,27 @@ const Direction = () => {
                 fullWidth
                 variant="standard"
               />
+              <TextField
+                autoFocus
+                required
+                margin="dense"
+                name="direction_img"
+                label="Direction Img"
+                type="text"
+                fullWidth
+                variant="standard"
+              />
+              <TextField
+                autoFocus
+                required
+                margin="dense"
+                name="direction_description"
+                label="Direction Description"
+                type="text"
+                fullWidth
+                multiline
+                variant="standard"
+              />
             </DialogContent>
             <DialogActions>
               <Button onClick={() => setOpen(false)}>Cancel</Button>
@@ -99,6 +120,12 @@ const Direction = () => {
                   <strong>Direction Name</strong>
                 </TableCell>
                 <TableCell>
+                  <strong>Direction Img</strong>
+                </TableCell>
+                <TableCell>
+                  <strong>Direction Description</strong>
+                </TableCell>
+                <TableCell>
                   <strong>Actions</strong>
                 </TableCell>
               </TableRow>
@@ -108,6 +135,8 @@ const Direction = () => {
                 <TableRow key={row.id}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{row.direction_name}</TableCell>
+                  <TableCell>{row.direction_img}</TableCell>
+                  <TableCell>{row.direction_description}</TableCell>
                   <TableCell>
                     <EditIcon
                       color="primary"
@@ -167,6 +196,39 @@ const Direction = () => {
                           fullWidth
                           variant="standard"
                         />
+                        <TextField
+                          autoFocus
+                          margin="dense"
+                          name="direction_img"
+                          label="Direction Img"
+                          value={dataUpdate.direction_img}
+                          onChange={(e) => {
+                            setDataUpdate({
+                              ...dataUpdate,
+                              direction_img: e.target.value,
+                            });
+                          }}
+                          type="text"
+                          fullWidth
+                          variant="standard"
+                        />
+                        <TextField
+                          autoFocus
+                          margin="dense"
+                          multiline
+                          name="direction_description"
+                          label="Direction Description"
+                          value={dataUpdate.direction_description}
+                          onChange={(e) => {
+                            setDataUpdate({
+                              ...dataUpdate,
+                              direction_description: e.target.value,
+                            });
+                          }}
+                          type="text"
+                          fullWidth
+                          variant="standard"
+                        />
                       </DialogContent>
                       <DialogActions>
                         <Button onClick={() => setOpenEdit(false)}>
@@ -198,5 +260,3 @@ const Direction = () => {
     </>
   );
 };
-
-export default Direction;

@@ -1,84 +1,160 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import getData from "../utils/getData";
-
-import logo from "../logo1.svg";
+import { Link, useNavigate } from "react-router-dom";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { AuthContext } from "../context/AuthProvider";
+import logo from "../logo1.svg";
+import getData from "../utils/getData";
 
 function Header({ mode, toggleColorMode }) {
   const navigate = useNavigate();
   const { user, logout } = React.useContext(AuthContext);
-  const [open, setOpen] = React.useState(false);
+
+  const [categories, setCategories] = React.useState([]);
+
+  const fetchData = async () => {
+    const categorie = await getData("category");
+    setCategories(categorie);
+  };
+  React.useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 bg-slate-50 shadow-lg">
-      <div className="container mx-auto px-4 h-16 max-w-screen-xl">
-        <div className="flex justify-between items-center h-14">
-          <Link to="/">
-            <img className="h-12" src={logo} alt="logo of cinema ticket" />
+    <header className="z-50 bg-slate-50 shadow-md">
+      <div className="container mx-auto max-w-screen-xl px-4 h-20 flex items-center justify-between">
+        <Link to="/">
+          <img className="h-12 mb-2" src={logo} alt="Cinema Ticket Logo" />
+        </Link>
+
+        <div className="flex flex-1 items-center space-x-8 pl-10">
+          <Link to="#">
+            <img
+              className="h-12 object-cover bg-transparent"
+              src="https://png.pngtree.com/png-vector/20230227/ourmid/pngtree-golden-ticket-png-image_6621563.png"
+              alt="Ticket"
+            />
           </Link>
-          <div className="px-5 transition-all duration-300 ease-in-out">
-            <div className="flex items-center justify-center">
-              <Link to="#" className="mr-4">
-                <img
-                  className="h-12 object-cover bg-transparent"
-                  src="https://png.pngtree.com/png-vector/20230227/ourmid/pngtree-golden-ticket-png-image_6621563.png"
-                  alt="Ticket"
-                />
-              </Link>
-              <div className="hover relative">
-                <div className=" text-left md:cursor-pointer group hover:text-yellow-500 ease-out transition-all duration-300 ">
-                  <Link
-                    to="#"
-                    className="py-9 flex text-sm justify-between items-center md:pr-0 pr-5 group capitalize hover:text-yellow-500 transition-all duration-300"
-                  >
-                    Cinema Corner
-                    <span className="text-xs md:ml-0.5 mt-0.5 md:block hidden group-hover:text-yellow-500 transition-all duration-300 text-[#777777]">
-                      <KeyboardArrowDownIcon />
-                    </span>
-                  </Link>
-                  <div>
-                    <div className="absolute top-[65px] -left-[33px] hidden  group-hover:md:block hover:md:block z-[800]">
-                      <Box
-                        sx={{ boxShadow: 3 }}
-                        class="shadow-[rgba(100,100,111,0.2)_0px_7px_29px_0px]"
-                      >
-                        <div className="bg-white min-w-[190px]  text-center border border-white border-solid rounded-sm ">
-                          <ul>
-                            <li className="text-sm text-black hover:text-yellow-600 hover:pl-0.5 hover:border-l-4 capitalize hover:border-yellow-600 hover:bg-yellow-50 transition-all duration-300">
-                              <Link className="block py-2" to="/actor">
-                                Actor
-                              </Link>
-                            </li>
-                          </ul>
-                        </div>
-                      </Box>
-                    </div>
-                  </div>
+
+          <div className="relative group">
+            <Link
+              to="#"
+              className="py-6 flex items-center text-sm group-hover:text-yellow-500 transition-all"
+            >
+              Cinema Corner
+              <span className="ml-1 mt-0.5 hidden md:block text-[#777] group-hover:text-yellow-500">
+                <KeyboardArrowDownIcon />
+              </span>
+            </Link>
+            <div className="absolute left-0 top-full hidden group-hover:block z-50">
+              <Box sx={{ boxShadow: 3 }} className="shadow-lg">
+                <div className="bg-white min-w-[190px] text-left border border-white rounded">
+                  <ul>
+                    <li className="py-2 px-4 text-sm text-black hover:text-yellow-600 hover:bg-yellow-50 hover:border-l-4 border-yellow-600">
+                      <Link to="/actor">Actor</Link>
+                    </li>
+                    <li className="py-2 px-4 text-sm text-black hover:text-yellow-600 hover:bg-yellow-50 hover:border-l-4 border-yellow-600">
+                      <Link to="/direction">Direction</Link>
+                    </li>
+                  </ul>
                 </div>
-              </div>
+              </Box>
             </div>
           </div>
-          <div className="px-5 transition-all duration-300 ease-in-out">
-            <div className="flex items-center justify-center">
-              {!user ? (
-                <>
-                  <button onClick={(e) => navigate("/register")}>
-                    Register
-                  </button>
-                  <button onClick={(e) => navigate("/login")}>Login</button>
-                </>
-              ) : (
-                <>
-                  <h2>{`Hello ${user.user_email}`}</h2>
-                  <button onClick={(e) => logout()}>logout</button>
-                </>
-              )}
+
+          <div className="relative group">
+            <Link
+              to="#"
+              className="py-6 flex items-center text-sm group-hover:text-yellow-500 transition-all"
+            >
+              Category
+              <span className="ml-1 mt-0.5 hidden md:block text-[#777] group-hover:text-yellow-500">
+                <KeyboardArrowDownIcon />
+              </span>
+            </Link>
+            <div className="absolute top-full  hidden group-hover:block z-50">
+              <Box sx={{ boxShadow: 3 }} className="shadow-lg">
+                <div className="bg-white min-w-[190px] text-left border border-white rounded">
+                  <ul>
+                    {categories.map((cat) => (
+                      <li
+                        key={cat.id}
+                        className="py-2 px-4 text-sm text-black hover:text-yellow-600 hover:bg-yellow-50 hover:border-l-4 border-yellow-600"
+                      >
+                        <Link to={`/category/${cat.id}`}>
+                          {cat.category_name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Box>
             </div>
           </div>
+          <div className="relative group">
+            <Link
+              to="#"
+              className="py-6 flex items-center text-sm group-hover:text-yellow-500 transition-all"
+            >
+              Event
+              <span className="ml-1 mt-0.5 hidden md:block text-[#777] group-hover:text-yellow-500">
+                <KeyboardArrowDownIcon />
+              </span>
+            </Link>
+            <div className="absolute left-0 top-full hidden group-hover:block z-50">
+              <Box sx={{ boxShadow: 3 }} className="shadow-lg">
+                <div className="bg-white min-w-[190px] text-left border border-white rounded">
+                  <ul>
+                    <li className="py-2 px-4 text-sm text-black hover:text-yellow-600 hover:bg-yellow-50 hover:border-l-4 border-yellow-600">
+                      <Link to="/actor">Endow</Link>
+                    </li>
+                    <li className="py-2 px-4 text-sm text-black hover:text-yellow-600 hover:bg-yellow-50 hover:border-l-4 border-yellow-600">
+                      <Link to="/direction">Good movie</Link>
+                    </li>
+                  </ul>
+                </div>
+              </Box>
+            </div>
+          </div>
+          <div className="relative group">
+            <Link
+              to="/about"
+              className="py-6 flex items-center text-sm group-hover:text-yellow-500 transition-all"
+            >
+              About Cinema
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 text-sm">
+          {!user ? (
+            <>
+              <button
+                onClick={() => navigate("/register")}
+                className="px-4 py-1.5 rounded bg-[#f26b38] text-white hover:bg-[#fb9440] transition"
+              >
+                Register
+              </button>
+              <button
+                onClick={() => navigate("/login")}
+                className="px-4 py-1.5 rounded border border-[#f26b38] text-[#f26b38] hover:bg-[#f26b38] hover:text-white transition"
+              >
+                Login
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="" className="">
+                <span className="text-gray-700"> {user.user_email}</span>
+              </Link>
+              <button
+                onClick={logout}
+                className="px-4 py-1.5 rounded bg-red-500 text-white hover:bg-red-600 transition"
+              >
+                Logout
+              </button>
+            </>
+          )}
         </div>
       </div>
     </header>

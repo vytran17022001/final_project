@@ -144,6 +144,7 @@ const Movie = () => {
                 name="movie_content"
                 label="Movie Content"
                 type="text"
+                multiline
                 fullWidth
                 required
                 variant="standard"
@@ -168,6 +169,8 @@ const Movie = () => {
               >
                 <DemoContainer components={["DateTimePicker"]}>
                   <DateTimePicker
+                    value={dayjs()}
+                    disabled
                     label="Movie Created At"
                     name="movie_createdAt"
                     slotProps={{
@@ -292,11 +295,15 @@ const Movie = () => {
                   <TableCell>{row.directionName}</TableCell>
                   <TableCell>{row.movie_content}</TableCell>
                   <TableCell>{row.movie_country}</TableCell>
-                  <TableCell>
-                    {dayjs(row.movie_createdAt).format("DD/MM/YYYY HH:mm")}
-                  </TableCell>
+                  <TableCell>{row.movie_createdAt}</TableCell>
                   <TableCell>{row.movie_duration}</TableCell>
-                  <TableCell>{row.movie_img}</TableCell>
+                  <TableCell>
+                    <img
+                      src={row.movie_img}
+                      alt={row.movie_name}
+                      className="h-20 w-auto"
+                    />
+                  </TableCell>
                   <TableCell>{row.movie_name}</TableCell>
                   <TableCell>{row.movie_price}</TableCell>
                   <TableCell>{row.movie_rating}</TableCell>
@@ -330,6 +337,8 @@ const Movie = () => {
                           const formJson = Object.fromEntries(
                             formData.entries()
                           ); // chuyen form thanh json
+                          // Add stripe_price_id from row data
+                          formJson.stripe_price_id = dataUpdate.stripe_price_id;
 
                           await updateData("movie", dataUpdate.id, formJson);
                           fetchData();
@@ -397,7 +406,6 @@ const Movie = () => {
                           label="Movie Content"
                           type="text"
                           multiline
-                          minRows={3}
                           fullWidth
                           required
                           variant="standard"

@@ -9,15 +9,15 @@ import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { useNavigate } from "react-router-dom";
 
-export const Actor = () => {
-  const [actors, setActors] = useState([]);
+export const Direction = () => {
+  const [diretions, setDirections] = useState([]);
   const [movies, setMovies] = React.useState([]);
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    const result = await getData("actor");
-    setActors(result);
+    const result = await getData("direction");
     const respMovie = await getData("movie");
+    setDirections(result);
     setMovies(respMovie);
   };
   React.useEffect(() => {
@@ -35,8 +35,8 @@ export const Actor = () => {
               </h1>
             </div>
             <div className="max-h-[710px] overflow-y-auto pr-2">
-              {actors &&
-                actors.map((actor) => (
+              {diretions &&
+                diretions.map((direc) => (
                   <div className="my-8">
                     <ul className="post_list">
                       <li className="mb-2">
@@ -49,9 +49,8 @@ export const Actor = () => {
                               height="170"
                               decoding="async"
                               data-nimg="1"
-                              className='rounded w-[109px] h-[79px] md:w-[255px] md:h-[170px] object-cover duration-500 ease-in-out group-hover:opacity-100"
-      scale-100 blur-0 grayscale-0)'
-                              src={actor.actor_img}
+                              className='rounded w-[109px] h-[79px] md:w-[255px] md:h-[170px] object-cover duration-500 ease-in-out group-hover:opacity-100" scale-100 blur-0 grayscale-0)'
+                              src={direc.direction_img}
                               sx={{ color: "transparent" }}
                             />
                           </Link>
@@ -60,7 +59,7 @@ export const Actor = () => {
                               to=""
                               className="text-black-10 text-sm md:text-[#333] md:text-lg font-semibold md:font-semibold not-italic transition-all duration-500 ease-in-out item__title"
                             >
-                              {actor.actor_name}
+                              {direc.direction_name}
                             </Link>
                             <div className="post__description">
                               <button className="bg-blue-500 hover:bg-blue-700 text-white focus:ring-10 focus:ring-blue-300 text-xs mr-2 py-1 px-5 rounded">
@@ -87,7 +86,7 @@ export const Actor = () => {
                               </button>
                               <div className=" text-gray-400 text-sm font-normal-important not-italic leading-6 mt-2 hidden md:block description__short__detail">
                                 <p className="text-justify">
-                                  {actor.actor_description}
+                                  {direc.direction_description}
                                 </p>
                               </div>
                             </div>

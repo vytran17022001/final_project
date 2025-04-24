@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
-import postData from "../utils/postData";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import getData from "../utils/getData";
-import { AuthContext } from "../context/AuthProvider";
+import { PaymentForm } from "../components/PaymentForm";
 
 export const Order = () => {
   const { showtimeId } = useParams();
   const [selectedSeat, setSelectedSeat] = React.useState([]);
   const [boughtSeat, setBoughtSeat] = React.useState([]);
-  const { user } = React.useContext(AuthContext);
-  const navigate = useNavigate();
 
   const handleSet = (seatId) => {
     if (boughtSeat.includes(seatId)) {
@@ -24,28 +21,7 @@ export const Order = () => {
     }
   };
 
-  const handlePay = async (e) => {
-    if (selectedSeat.length === 0) return alert("Please select seat");
-    if (!user) {
-      // context
-      alert("Please login");
-      const oldUrl = document.location.pathname;
-      return navigate(`/login?oldUrl=${oldUrl}`); // useNavigate
-    }
-    // if (selectedSeat.length === 0) alert("Please select seat");
-
-    await postData("order", {
-      order_createdAt: new Date(),
-      order_isPaid: false,
-      showtime_id: showtimeId,
-      user_id: user.id,
-      order_chair: selectedSeat,
-    })
-      .then(() => alert("Da mua thanh cong"))
-      .catch((err) => alert("That bai"));
-  };
-
-  React.useEffect(() => {
+  useEffect(() => {
     getData("order").then((data) => {
       const boughtSeat = data.filter(
         (order) => order.showtime_id === showtimeId
@@ -81,10 +57,10 @@ export const Order = () => {
               border 
               ${
                 isBought
-                  ? "bg-gray-400 border-gray-400 cursor-not-allowed"
+                  ? "bg-gray-300 border-gray-300 cursor-not-allowed"
                   : isSelected
-                  ? "bg-yellow-400 text-white border-yellow-400"
-                  : "bg-white border-gray-300 hover:bg-yellow-200"
+                  ? "bg-orange-500 text-white "
+                  : "bg-white border-gray-300 hover:bg-orange-500"
               }
             `}
               >
@@ -99,8 +75,8 @@ export const Order = () => {
 
   return (
     <main className="bg-slate-100 py-6">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
-        <div className="md:col-span-2">
+      <div className="container mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 px-4">
+        <div className="lg:col-span-2">
           <div className="bg-white p-6 rounded-xl shadow-md">
             <div className="relative border-t-4 border-red-500 rounded-full text-center text-sm py-2 mb-10">
               <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-gray-500 font-semibold">
@@ -118,13 +94,13 @@ export const Order = () => {
               </div>
             </div>
             <div className="mt-10">
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-600">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600">
                 <div className="flex items-center gap-2">
-                  <span className="w-6 h-6 rounded bg-gray-400 inline-block"></span>
+                  <span className="w-6 h-6 rounded bg-gray-300 inline-block"></span>
                   <span>Chair Sold</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-6 h-6 rounded bg-yellow-400 inline-block"></span>
+                  <span className="w-6 h-6 rounded bg-orange-500 inline-block"></span>
                   <span>Being chosen</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -140,22 +116,8 @@ export const Order = () => {
           </div>
         </div>
 
-        {/* Cột bên phải (info hoặc tóm tắt) */}
-        <div className="hidden md:block">
-          <div className="bg-white p-4 rounded-xl shadow-md h-full">
-            <p className="text-gray-600">
-              Bạn có thể thêm thông tin ghế đã chọn, tổng tiền, tên phim,... ở
-              đây.
-            </p>
-            <div className="mt-6 text-center">
-              <button
-                onClick={handlePay}
-                className="bg-green-500 text-white px-6 py-2 rounded-md font-semibold hover:bg-green-600 transition duration-150"
-              >
-                Pay
-              </button>
-            </div>
-          </div>
+        <div className="md:block">
+          <PaymentForm selectedSeat={selectedSeat} />
         </div>
       </div>
     </main>

@@ -102,7 +102,7 @@ export default function Adi() {
     setOpen(!open);
   };
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     if (!user) {
       return navigate("/");
     }
@@ -189,9 +189,11 @@ export default function Adi() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          {/* <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }} */}
+          <div className="p-2 pt-4 md:p-10">
             <Outlet />
-            {/* <Grid container spacing={3}>
+          </div>
+          {/* <Grid container spacing={3}>
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
@@ -217,8 +219,8 @@ export default function Adi() {
                 </Paper>
               </Grid>
             </Grid> */}
-            <Copyright sx={{ pt: 4 }} />
-          </Container>
+          <Copyright sx={{ pt: 4 }} />
+          {/* </Container> */}
         </Box>
       </Box>
     </ThemeProvider>

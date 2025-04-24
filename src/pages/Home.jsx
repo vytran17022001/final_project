@@ -2,7 +2,7 @@ import React from "react";
 import { Carousel } from "../components/Carousel";
 import getData from "../utils/getData";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthProvider";
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 
 const slides = [
   "https://cdn.galaxycine.vn/media/2024/7/10/my-boo-2048_1720598615672.jpg",
@@ -13,7 +13,6 @@ const slides = [
 
 const Home = () => {
   const [movies, setMovies] = React.useState([]);
-  // const user = React.useContext(AuthContext);
 
   const fetchData = async () => {
     const result = await getData("movie");
@@ -26,82 +25,84 @@ const Home = () => {
 
   return (
     <>
-      <div class="carousel relative  mx-auto">
+      <div className="carousel relative  mx-auto">
         <Carousel autoSlide={true}>
           {slides.map((s) => (
             <img src={s} alt="" className="" />
           ))}
         </Carousel>
       </div>
-      <section class="bg-white py-8">
-        <div class="container mx-auto max-w-screen-xl flex items-center flex-wrap pt-4 pb-12">
-          <nav id="store" class="w-full z-30 top-0 px-6 py-1">
-            <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3">
-              <Link
-                to="/"
-                class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl "
-              >
-                Store
+
+      <section className="bg-white py-8">
+        <div className="container mx-auto max-w-screen-xl px-4">
+          <nav className="flex items-center justify-between mb-8">
+            <Link
+              to="/"
+              className="text-2xl font-bold tracking-wide text-gray-800 hover:text-gray-600"
+            >
+              🎬 Galaxy Store
+            </Link>
+
+            <div className="flex gap-4 items-center">
+              <Link to="/movies" className="flex items-center gap-2">
+                <svg
+                  className="w-6 h-6 text-gray-600 hover:text-black"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M7 11H17V13H7zM4 7H20V9H4zM10 15H14V17H10z"></path>
+                </svg>
+                <span className="text-sm text-gray-700 hover:text-blue-200">
+                  View all movies
+                </span>
               </Link>
 
-              <div class="flex items-center" id="store-nav-content">
-                <Link
-                  to="/"
-                  class="pl-3 inline-block no-underline hover:text-black"
+              <Link to="/">
+                <svg
+                  className="w-6 h-6 text-gray-600 hover:text-black"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
                 >
-                  <svg
-                    class="fill-current hover:text-black"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M7 11H17V13H7zM4 7H20V9H4zM10 15H14V17H10z"></path>
-                  </svg>
-                </Link>
-
-                <Link
-                  to="/"
-                  class="pl-3 inline-block no-underline hover:text-black"
-                >
-                  <svg
-                    class="fill-current hover:text-black"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M10,18c1.846,0,3.543-0.635,4.897-1.688l4.396,4.396l1.414-1.414l-4.396-4.396C17.365,13.543,18,11.846,18,10 c0-4.411-3.589-8-8-8s-8,3.589-8,8S5.589,18,10,18z M10,4c3.309,0,6,2.691,6,6s-2.691,6-6,6s-6-2.691-6-6S6.691,4,10,4z"></path>
-                  </svg>
-                </Link>
-              </div>
+                  <path d="M10,18c1.846,0,3.543-0.635,4.897-1.688l4.396,4.396l1.414-1.414l-4.396-4.396C17.365,13.543,18,11.846,18,10 c0-4.411-3.589-8-8-8s-8,3.589-8,8S5.589,18,10,18z M10,4c3.309,0,6,2.691,6,6s-2.691,6-6,6s-6-2.691-6-6S6.691,4,10,4z"></path>
+                </svg>
+              </Link>
             </div>
           </nav>
 
-          {movies &&
-            movies.map((movie) => (
-              <div class="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col">
-                <Link to={`/movie/${movie.id}`}>
-                  <img
-                    class="hover:grow hover:shadow-lg h-60 object-contain w-full"
-                    src={movie.movie_img}
-                    alt=""
-                  />
-                  <div class="pt-3 flex items-center justify-between">
-                    <p class="">{movie.movie_name}</p>
-                    {movie.movie_rating} *
-                    <svg
-                      class="h-6 w-6 fill-current text-gray-500 hover:text-black"
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M12,4.595c-1.104-1.006-2.512-1.558-3.996-1.558c-1.578,0-3.072,0.623-4.213,1.758c-2.353,2.363-2.352,6.059,0.002,8.412 l7.332,7.332c0.17,0.299,0.498,0.492,0.875,0.492c0.322,0,0.609-0.163,0.792-0.409l7.415-7.415 c2.354-2.354,2.354-6.049-0.002-8.416c-1.137-1.131-2.631-1.754-4.209-1.754C14.513,3.037,13.104,3.589,12,4.595z M18.791,6.205 c1.563,1.571,1.564,4.025,0.002,5.588L12,18.586l-6.793-6.793C3.645,10.23,3.646,7.776,5.205,6.209 c0.76-0.756,1.754-1.172,2.799-1.172s2.035,0.416,2.789,1.17l0.5,0.5c0.391,0.391,1.023,0.391,1.414,0l0.5-0.5 C14.719,4.698,17.281,4.702,18.791,6.205z"></path>
-                    </svg>
-                  </div>
-                  <p class="pt-1 text-gray-900">{movie.movie_price} VND</p>
-                </Link>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 ">
+            {movies &&
+              movies.map((movie) => (
+                <div key={movie.id}>
+                  <Link
+                    to={`/movie/${movie.id}`}
+                    className="relative group block"
+                  >
+                    <div className="relative rounded-lg overflow-hidden transition-shadow duration-200 group-hover:shadow-xl w-[270px] h-[405px]">
+                      <img
+                        src={movie.movie_img}
+                        alt={movie.movie_name}
+                        className="w-[270px] h-[405px] object-cover"
+                      />
+
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 w-[270px] h-[405px]"></div>
+
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="text-white bg-[#f26b38] w-[120px] h-[40px] hover:bg-[#fb9440] rounded text-sm px-3.5 py-3 text-center flex items-center justify-center gap-1 dark:hover:bg-[#fb9440] dark:focus:ring-[#fb9440]">
+                          <ConfirmationNumberIcon style={{ fontSize: 20 }} />
+                          <span>Pay Ticket</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-2 ">
+                      <p className="text-sl font-semibold text-gray-800 truncate">
+                        {movie.movie_name}
+                      </p>
+                    </div>
+                  </Link>
+                </div>
+              ))}
+          </div>
         </div>
       </section>
     </>

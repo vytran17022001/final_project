@@ -13,29 +13,29 @@ const logoStyle = {
 const Footer = () => {
   return (
     <footer className="bg-stone-200  mt-6">
-      <div class="mx-auto max-w-screen-xl px-4 pb-6 pt-16 sm:px-6 lg:px-5 lg:pt-8 ">
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      <div className="mx-auto max-w-screen-xl px-4 pb-6 pt-16 sm:px-6 lg:px-5 lg:pt-8 ">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
             <Link to="/">
               <img src={logo} style={logoStyle} alt="logo of cinema ticket" />
             </Link>
 
-            <p class="mt-2 max-w-md text-center leading-relaxed text-gray-500 sm:max-w-xs sm:text-left">
+            <p className="mt-2 max-w-md text-center leading-relaxed text-gray-500 sm:max-w-xs sm:text-left">
               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
               consequuntur amet culpa cum itaque neque.
             </p>
 
-            <ul class="mt-8 flex justify-center gap-6 sm:justify-start md:gap-8">
+            <ul className="mt-8 flex justify-center gap-6 sm:justify-start md:gap-8">
               <li>
                 <Link
                   to="/"
                   rel="noreferrer"
                   target="_blank"
-                  class="text-blue-600 "
+                  className="text-blue-600 "
                 >
-                  <span class="sr-only">Facebook</span>
+                  <span className="sr-only">Facebook</span>
                   <svg
-                    class="h-6 w-6"
+                    className="h-6 w-6"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                     aria-hidden="true"
@@ -47,9 +47,9 @@ const Footer = () => {
 
               <li>
                 <Link to="/" rel="noreferrer" target="_blank">
-                  <span class="sr-only">Instagram</span>
+                  <span className="sr-only">Instagram</span>
                   <svg
-                    class="h-6 w-6 "
+                    className="h-6 w-6 "
                     fill="currentColor"
                     aria-hidden="true"
                     viewBox="0 0 48 48"
@@ -110,11 +110,11 @@ const Footer = () => {
                   to="/"
                   rel="noreferrer"
                   target="_blank"
-                  class="text-red-500"
+                  className="text-red-500"
                 >
-                  <span class="sr-only">Youtube</span>
+                  <span className="sr-only">Youtube</span>
                   <svg
-                    class="h-6 w-6"
+                    className="h-6 w-6"
                     fill="currentColor"
                     viewBox="0 0 576 512"
                     aria-hidden="true"
@@ -137,7 +137,7 @@ const Footer = () => {
               <ul class="mt-8 space-y-4 text-sm">
                 <li>
                   <Link
-                    to="/"
+                    to="/about"
                     class="text-gray-700 transition hover:text-gray-700/75"
                   >
                     Usage Agreement

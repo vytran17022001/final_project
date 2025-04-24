@@ -1,4 +1,3 @@
-import React from "react";
 import getData from "./getData";
 import bcrypt from "bcryptjs";
 import postData from "./postData";

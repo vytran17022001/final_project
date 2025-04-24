@@ -46,7 +46,7 @@ const Showtime = () => {
     fetchData();
   };
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     fetchData();
   }, []);
   return (
@@ -142,9 +142,7 @@ const Showtime = () => {
                 return (
                   <TableRow key={row.id}>
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>
-                      {dayjs(row.showtime_timedate).format("DD/MM/YYYY HH:mm")}
-                    </TableCell>
+                    <TableCell>{row.showtime_timedate}</TableCell>
                     <TableCell>{movieName}</TableCell>
                     <TableCell>
                       <EditIcon

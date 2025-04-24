@@ -49,7 +49,7 @@ export const Actor = () => {
             color="primary"
             onClick={() => setOpen(true)}
           >
-            Create Direction
+            Create Actor
           </Button>
           <Dialog
             open={open}
@@ -97,6 +97,7 @@ export const Actor = () => {
                 name="actor_description"
                 label="Actor Description"
                 type="text"
+                multiline
                 fullWidth
                 variant="standard"
               />
@@ -221,7 +222,6 @@ export const Actor = () => {
                           type="text"
                           fullWidth
                           multiline
-                          minRows={3}
                           variant="standard"
                         />
                       </DialogContent>
