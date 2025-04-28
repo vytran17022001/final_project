@@ -15,7 +15,6 @@ export const PaymentForm = ({ selectedSeat }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [price, setPrice] = useState(0);
 
-  // Lấy thông tin phim
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,7 +22,6 @@ export const PaymentForm = ({ selectedSeat }) => {
         const data = respMovie.find((m) => m.id === id);
         setMovie(data);
 
-        // Tính giá dựa trên số ghế đã chọn
         if (selectedSeat && selectedSeat.length > 0) {
           setPrice(selectedSeat.length * data.movie_price);
         }

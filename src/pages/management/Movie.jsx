@@ -69,9 +69,14 @@ const Movie = () => {
     };
   });
 
-  const handleDelete = async (id) => {
-    await deleteData("movie", id);
-    fetchData();
+  const handleDelete = async (id, name) => {
+    const isConfirm = window.confirm(
+      `Are you sure you want to delete movie "${name}"?`
+    );
+    if (isConfirm) {
+      await deleteData("movie", id);
+      fetchData();
+    }
   };
 
   React.useEffect(() => {
@@ -170,7 +175,6 @@ const Movie = () => {
                 <DemoContainer components={["DateTimePicker"]}>
                   <DateTimePicker
                     value={dayjs()}
-                    disabled
                     label="Movie Created At"
                     name="movie_createdAt"
                     slotProps={{
@@ -325,11 +329,15 @@ const Movie = () => {
                       }}
                     />
                     <Dialog
-                      style={{ marginBottom: "80px" }}
+                      style={{
+                        marginBottom: "80px",
+                      }}
                       open={openEdit}
                       onClose={() => setOpenEdit(false)}
+                      hideBackdrop
                       PaperProps={{
                         component: "form",
+
                         onSubmit: async (event) => {
                           event.preventDefault();
 
@@ -337,8 +345,6 @@ const Movie = () => {
                           const formJson = Object.fromEntries(
                             formData.entries()
                           ); // chuyen form thanh json
-                          // Add stripe_price_id from row data
-                          formJson.stripe_price_id = dataUpdate.stripe_price_id;
 
                           await updateData("movie", dataUpdate.id, formJson);
                           fetchData();
@@ -579,7 +585,7 @@ const Movie = () => {
                         },
                         fontSize: "25px",
                       }}
-                      onClick={() => handleDelete(row.id)}
+                      onClick={() => handleDelete(row.id, row.movie_name)}
                     />
                   </TableCell>
                 </TableRow>

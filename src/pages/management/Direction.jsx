@@ -135,7 +135,13 @@ export const Direction = () => {
                 <TableRow key={row.id}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{row.direction_name}</TableCell>
-                  <TableCell>{row.direction_img}</TableCell>
+                  <TableCell>
+                    <img
+                      src={row.direction_img}
+                      alt={row.direction_name}
+                      className="h-20 w-auto"
+                    />
+                  </TableCell>
                   <TableCell>{row.direction_description}</TableCell>
                   <TableCell>
                     <EditIcon

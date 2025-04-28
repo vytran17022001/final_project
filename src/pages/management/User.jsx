@@ -23,7 +23,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
-const User = () => {
+export const User = () => {
   const [data, setData] = React.useState([]);
   const [roles, setRoles] = React.useState([]);
   const [open, setOpen] = React.useState(false);
@@ -267,5 +267,3 @@ const User = () => {
     </>
   );
 };
-
-export default User;

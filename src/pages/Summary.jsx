@@ -4,7 +4,6 @@ import getData from "../utils/getData";
 import { QRCodeSVG } from "qrcode.react";
 import postData from "../utils/postData";
 import { AuthContext } from "../context/AuthProvider";
-import { use } from "react";
 
 const Summary = () => {
   const [order, setOrder] = useState(null);
@@ -17,10 +16,9 @@ const Summary = () => {
   const success = params.get("success");
   const movie_id = params.get("movie_id");
   const showtime_id = params.get("showtime_id");
-  const selectedSeat = params.get("selected_seat").split(",");
+  const selectedSeat = params.get("selected_seat")?.split(",") || [];
 
   const checkOrderSuccess = async () => {
-    if (!user) return;
     const movieList = await getData("movie");
     const movie = movieList.find((movie) => movie.id === movie_id);
     setMovie(movie);
@@ -34,10 +32,11 @@ const Summary = () => {
   };
 
   useEffect(() => {
-    checkOrderSuccess(success);
-  }, [user?.id]);
+    if (user && order) checkOrderSuccess(success);
+  }, [order]);
 
   useEffect(() => {
+    if (!user) return;
     const fetchData = async () => {
       const orderList = await getData("order");
       const order = orderList.find(
@@ -46,7 +45,7 @@ const Summary = () => {
           order.user_id === user?.id &&
           order.order_isPaid === true
       );
-      if (!order) {
+      if (!order && success === "true") {
         const data = {
           order_createdAt: new Date(),
           order_isPaid: true,
@@ -61,7 +60,7 @@ const Summary = () => {
     };
 
     fetchData();
-  }, [success]);
+  }, [user]);
 
   return (
     <div className="max-w-2xl mx-auto p-6">
@@ -120,7 +119,7 @@ const Summary = () => {
             <div className="flex justify-between">
               <p className="text-gray-600 w-max">Total Amount</p>
               <p className="font-semibold text-right w-max">
-                {movie?.movie_price * selectedSeat.length} VND
+                {movie?.movie_price * selectedSeat.length || 0} VND
               </p>
             </div>
           </div>

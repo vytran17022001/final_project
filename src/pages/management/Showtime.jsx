@@ -133,12 +133,10 @@ const Showtime = () => {
             </TableHead>
             <TableBody>
               {data.map((row, index) => {
-                let movieName = "Unknown";
+                const movieName =
+                  movies.find((r) => r.id === row.movie_id)?.movie_name ||
+                  "Unknown";
 
-                const foundMovie = movies.find((r) => r.id === row.movie_id);
-                if (movieName) {
-                  movieName = foundMovie.movie_name;
-                }
                 return (
                   <TableRow key={row.id}>
                     <TableCell>{index + 1}</TableCell>

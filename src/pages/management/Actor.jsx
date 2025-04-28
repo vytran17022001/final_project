@@ -134,7 +134,13 @@ export const Actor = () => {
                 <TableRow key={row.id}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{row.actor_name}</TableCell>
-                  <TableCell>{row.actor_img}</TableCell>
+                  <TableCell>
+                    <img
+                      src={row.actor_img}
+                      alt={row.actor_name}
+                      className="h-20 w-auto"
+                    />
+                  </TableCell>
                   <TableCell>{row.actor_description}</TableCell>
                   <TableCell>
                     <EditIcon

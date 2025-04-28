@@ -14,13 +14,14 @@ import { Direction as ManagementDirection } from "./pages/management/Direction";
 import { Actor } from "./pages/Actor";
 import { Direction } from "./pages/Direction";
 import Category from "./pages/management/Category";
-import User from "./pages/management/User";
+import { User as ManagementUser } from "./pages/management/User";
 import Movie from "./pages/management/Movie";
 import { Order } from "./pages/Order";
 import Summary from "./pages/Summary";
 import { Order as ManagementOrder } from "./pages/management/Order";
 import Showtime from "./pages/management/Showtime";
 import MovieDetail from "./pages/MovieDetail";
+import { User } from "./pages/User";
 import Movies from "./pages/Movies";
 import { AuthContext, AuthProvider } from "./context/AuthProvider";
 
@@ -44,7 +45,7 @@ export default function App() {
               <Route path="/management/movie" element={<Movie />} />
               <Route path="/management/showtime" element={<Showtime />} />
               <Route path="/management/category" element={<Category />} />
-              <Route path="/management/user" element={<User />} />
+              <Route path="/management/user" element={<ManagementUser />} />
               <Route path="/management/order" element={<ManagementOrder />} />
             </Route>
           </Route>
@@ -68,6 +69,7 @@ export default function App() {
             <Route path="/summary" element={<Summary />} />
             <Route path="/actor" element={<Actor />} />
             <Route path="/direction" element={<Direction />} />
+            <Route path="/user/:id" element={<User />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

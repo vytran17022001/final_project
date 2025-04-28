@@ -143,7 +143,7 @@ const MovieDetail = () => {
 
           <div className="mt-10">
             <h2 className="text-l font-bold mb-4 border-l-4 border-sky-500 pl-2">
-              Nội Dung Phim
+              Movie Content
             </h2>
             <div className="rounded-md p-4">
               <p className="text-base -mt-3">{movie.movie_content}</p>
@@ -154,8 +154,8 @@ const MovieDetail = () => {
             <h2 className="text-l font-bold mb-4 border-l-4 border-sky-500 pl-2">
               Showtime
             </h2>
-            <div className="rounded-md p-4">
-              <h3 className="text-base font-semibold text-gray-800 mb-2 -mt-1">
+            <div className="rounded-md p-4 ">
+              <h3 className="text-base font-semibold text-gray-800 mb-2 -mt-5">
                 Galaxy Trường Chinh - 2D Vietsub
               </h3>
               <div className="flex flex-wrap gap-3">

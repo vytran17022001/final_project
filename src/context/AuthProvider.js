@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
 
-    if (storedUser && storedUser !== undefined) {
+    if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
   }, []);

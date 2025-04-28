@@ -131,20 +131,20 @@ function Header({ mode, toggleColorMode }) {
             <>
               <button
                 onClick={() => navigate("/register")}
-                className="px-4 py-1.5 rounded bg-[#f26b38] text-white hover:bg-[#fb9440] transition"
+                className="px-4 py-1.5 rounded bg-blue-400 text-white hover:bg-blue-500 transition"
               >
                 Register
               </button>
               <button
                 onClick={() => navigate("/login")}
-                className="px-4 py-1.5 rounded border border-[#f26b38] text-[#f26b38] hover:bg-[#f26b38] hover:text-white transition"
+                className="px-4 py-1.5 rounded border border-blue-400 text-blue-400 hover:bg-blue-500  hover:text-white transition"
               >
                 Login
               </button>
             </>
           ) : (
             <>
-              <Link to="" className="">
+              <Link to={`/user/${user.id}`} className="">
                 <span className="text-gray-700"> {user.user_email}</span>
               </Link>
               <button

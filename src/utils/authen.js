@@ -23,10 +23,14 @@ export const register = async (email, password) => {
   }
 
   const hashPassword = bcrypt.hashSync(password, process.env.REACT_APP_SALT);
+  const roles = await getData("role");
+  const defaultRole = roles.find((r) => r.role_name === "User");
+  const role_id = defaultRole ? defaultRole.id : "Don't role";
 
   const data = {
     user_email: email,
     user_password: hashPassword,
+    role_id: role_id,
   };
 
   await postData("user", data);
